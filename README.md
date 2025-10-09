@@ -37,3 +37,10 @@ mvn clean install
 mvn spring-boot:run
 
 
+Application will start on:
+👉 http://localhost:9090
+
+📘 API Documentation (Swagger)
+
+Once the app is running, open:
+👉 http://localhost:9090/swagger-ui/index.html
