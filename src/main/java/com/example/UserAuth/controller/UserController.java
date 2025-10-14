@@ -2,8 +2,11 @@ package com.example.UserAuth.controller;
 
 import com.example.UserAuth.entity.User;
 import com.example.UserAuth.repository.UserRepository;
+import com.example.UserAuth.service.TokenBlacklistService;
 import com.example.UserAuth.service.UserService;
+import com.example.UserAuth.utils.JwtUtil;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,6 +24,12 @@ public class UserController {
 
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private TokenBlacklistService tokenBlacklistService;
+
+    @Autowired
+    private JwtUtil jwtUtil;
 
     @GetMapping("/profile")
     public ResponseEntity<?> getProfile() {
@@ -45,6 +54,18 @@ public class UserController {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         userRepository.deleteByUsername(authentication.getName());
         return ResponseEntity.ok("User Deleted Succesfully!!");
+    }
+
+    @PostMapping("/logout")
+    public ResponseEntity<?> logout(HttpServletRequest request) {
+        String authHeader = request.getHeader("Authorization");
+        if(authHeader != null && authHeader.startsWith("Bearer ")) {
+            String token = jwtUtil.extractTokenFromRequest(request);
+            tokenBlacklistService.addToken(token);
+//            System.out.println("Token added to blacklist" + token);
+            return ResponseEntity.ok("User Logout Succesfully!!");
+        }
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("No token found in header!");
     }
 
 }

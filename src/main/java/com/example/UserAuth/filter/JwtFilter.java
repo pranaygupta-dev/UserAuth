@@ -40,7 +40,7 @@ public class JwtFilter extends OncePerRequestFilter {
         }
 
         //New code added for log out feature
-        if(jwt != null && tokenBlacklistService.isTokenBlacklisted(username)) {
+        if(jwt != null && tokenBlacklistService.isTokenBlacklisted(jwt)) {
             response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
             response.getWriter().write("Token has been invalidated. PLease log in again.");
             return;
@@ -56,6 +56,8 @@ public class JwtFilter extends OncePerRequestFilter {
             }
         }
         filterChain.doFilter(request, response);
+
+
 
 //        if (username != null) {
 //            UserDetails userDetails = userDetailsService.loadUserByUsername(username);
