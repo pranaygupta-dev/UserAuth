@@ -62,7 +62,6 @@ public class UserController {
         if(authHeader != null && authHeader.startsWith("Bearer ")) {
             String token = jwtUtil.extractTokenFromRequest(request);
             tokenBlacklistService.addToken(token);
-//            System.out.println("Token added to blacklist" + token);
             return ResponseEntity.ok("User Logout Succesfully!!");
         }
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("No token found in header!");
