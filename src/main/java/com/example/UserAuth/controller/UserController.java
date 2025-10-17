@@ -43,6 +43,11 @@ public class UserController {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String username = authentication.getName();
         User userInDb = userService.findByUserName(username);
+
+        if(userInDb == null) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not found");
+        }
+
         userInDb.setUsername(user.getUsername());
         userInDb.setPassword(user.getPassword());
         userService.saveEntry(userInDb);
@@ -53,7 +58,7 @@ public class UserController {
     public ResponseEntity<?> deleteUser() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         userRepository.deleteByUsername(authentication.getName());
-        return ResponseEntity.ok("User Deleted Succesfully!!");
+        return ResponseEntity.ok("User Deleted Successfully!!");
     }
 
     @PostMapping("/logout")
@@ -66,5 +71,4 @@ public class UserController {
         }
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("No token found in header!");
     }
-
 }

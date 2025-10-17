@@ -23,6 +23,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
 
+
 @ExtendWith(MockitoExtension.class)
 class PublicControllerTest {
 
@@ -78,9 +79,9 @@ class PublicControllerTest {
     @DisplayName("Login - Success")
     void testLogin_Success() {
 
-        User validUser = new User();
-        validUser.setUsername("john");
-        validUser.setPassword("password123");
+//        User validUser = new User();
+//        validUser.setUsername("john");
+//        validUser.setPassword("password123");
 
         UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken("john", "password123");
 
@@ -121,9 +122,9 @@ class PublicControllerTest {
     @DisplayName("Login - UserDetailsService exception")
     void testLogin_UserDetailsThrowsException() {
 
-        User validUser = new User();
-        validUser.setUsername("john");
-        validUser.setPassword("password123");
+//        User validUser = new User();
+//        validUser.setUsername("john");
+//        validUser.setPassword("password123");
 
         UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken("john", "password123");
 
