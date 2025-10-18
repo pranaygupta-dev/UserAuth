@@ -38,7 +38,7 @@ public class PublicController {
     private JwtUtil jwtUtil;
 
     @PostMapping("signup")
-    public ResponseEntity<?> signUp(@Valid @RequestBody User user) {
+    public ResponseEntity<?> signUp(@Valid @RequestBody User user) {  // here validating the data before go inside block, and send error response automatically
         userService.saveEntry(user);
         return ResponseEntity.ok("User registered successfully");
     }
@@ -52,7 +52,7 @@ public class PublicController {
             String jwt = jwtUtil.generateToken(userDetails.getUsername());
             return new ResponseEntity<>(jwt, HttpStatus.OK);
         } catch (Exception e) {
-            log.error("Exception occurred while createAuthtenticationToken ", e);
+            log.error("Exception occurred while create AuthtenticationToken ", e);
             return new ResponseEntity<>("Incorrect username or password",HttpStatus.BAD_REQUEST);
         }
     }
