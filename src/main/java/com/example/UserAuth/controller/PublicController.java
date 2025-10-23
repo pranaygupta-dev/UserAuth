@@ -37,11 +37,26 @@ public class PublicController {
     @Autowired
     private JwtUtil jwtUtil;
 
+//    @PostMapping("signup")
+//    public ResponseEntity<?> signUp(@Valid @RequestBody User user) {
+//        userService.saveEntry(user);
+//        return ResponseEntity.ok("User registered successfully");
+//    }
+
     @PostMapping("signup")
     public ResponseEntity<?> signUp(@Valid @RequestBody User user) {
+        // Check if user already exists
+        if (userService.existsByUsername(user.getUsername())) {
+            return ResponseEntity
+                    .status(HttpStatus.CONFLICT)  // 409 Conflict is more appropriate
+                    .body("User with username '" + user.getUsername() + "' already exists");
+        }
+
+        // Save the user if not already present
         userService.saveEntry(user);
         return ResponseEntity.ok("User registered successfully");
     }
+
 
     @PostMapping("login")
     public ResponseEntity<String> login(@RequestBody User user) {
