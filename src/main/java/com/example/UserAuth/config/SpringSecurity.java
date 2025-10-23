@@ -45,7 +45,8 @@ public class SpringSecurity {
         auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder());
     }
 
-    private PasswordEncoder passwordEncoder() {
+    @Bean
+    public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
 
