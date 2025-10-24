@@ -46,7 +46,9 @@ public class PublicController {
     @PostMapping("signup")
     public ResponseEntity<?> signUp(@Valid @RequestBody User user) {
         // Check if user already exists
+        log.info("Signup request received for username: {}", user.getUsername());
         if (userService.existsByUsername(user.getUsername())) {
+            log.warn("Signup failed: User with username '{}' already exists", user.getUsername());
             return ResponseEntity
                     .status(HttpStatus.CONFLICT)  // 409 Conflict is more appropriate
                     .body("User with username '" + user.getUsername() + "' already exists");
@@ -54,17 +56,20 @@ public class PublicController {
 
         // Save the user if not already present
         userService.saveEntry(user);
+        log.info("User '{}' registered successfully", user.getUsername());
         return ResponseEntity.ok("User registered successfully");
     }
 
 
     @PostMapping("login")
     public ResponseEntity<String> login(@RequestBody User user) {
+        log.info("Login attempt for username: {}", user.getUsername());
         try {
             authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(user.getUsername(), user.getPassword()));
             UserDetails userDetails = userDetailsService.loadUserByUsername(user.getUsername());
             String jwt = jwtUtil.generateToken(userDetails.getUsername());
+            log.info("User '{}' logged in successfully", user.getUsername());
             return new ResponseEntity<>(jwt, HttpStatus.OK);
         } catch (Exception e) {
             log.error("Exception occurred while createAuthtenticationToken ", e);

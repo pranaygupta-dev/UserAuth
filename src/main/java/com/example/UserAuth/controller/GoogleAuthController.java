@@ -51,6 +51,8 @@ public class GoogleAuthController {
 
     @GetMapping("/callback")
     public ResponseEntity<?> handleGoogleCallback(@RequestParam String code) {
+        log.info("Google OAuth callback received with code: {}", code);
+
         try {
             String tokenEndpoint = "https://oauth2.googleapis.com/token";
 
@@ -65,30 +67,50 @@ public class GoogleAuthController {
             headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
 
             HttpEntity <MultiValueMap<String, String>> request = new HttpEntity <>(params, headers);
+            log.info("Requesting access token from Google...");
 
             ResponseEntity<Map> tokenResponse = restTemplate.postForEntity(tokenEndpoint, request, Map.class);
+
+            //Added later during adding logs
+            if(tokenResponse.getStatusCode() != HttpStatus.OK || tokenResponse.getBody() == null) {
+                log.error("Failed to retrieve access token from Google. Status: {}", tokenResponse.getStatusCode());
+                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Failed to get access token");
+            }
+
             String idToken = (String) tokenResponse.getBody().get("id_token");
+            log.info("Access token retrieved successfully. ID token: {}", idToken);
+
             String userInfoUrl = "https://oauth2.googleapis.com/tokeninfo?id_token=" + idToken;
+            log.info("Fetching user info from Google using ID token...");
             ResponseEntity<Map> userInfoResponse = restTemplate.getForEntity(userInfoUrl, Map.class);
+
             if(userInfoResponse.getStatusCode() == HttpStatus.OK) {
                 Map<String, Object> userInfo = userInfoResponse.getBody();
                 String email = (String) userInfo.get("email");
+                log.info("User info retrieved from Google. Email: {}", email);
+
                 UserDetails userDetails = null;
                 try {
                     userDetails = userDetailsService.loadUserByUsername(email);
+                    log.info("Existing user found with email: {}", email);
                 } catch (Exception e) {
+                    log.info("No existing user found with email: {}. Creating new user...", email);
                     User user = new User();
                     user.setEmail(email);
                     user.setUsername(email);
                     user.setPassword(passwordEncoder.encode(UUID.randomUUID().toString()));
                     userRepository.save(user);
+                    log.info("New user created with email: {}", email);
                 }
                 String jwtToken = jwtUtil.generateToken(email);
+                log.info("JWT generated for user: {}", email);
                 return ResponseEntity.ok(Collections.singletonMap("token", jwtToken));
             }
+            log.warn("Failed to fetch user info from Google. Status: {}", userInfoResponse.getStatusCode());
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+
         } catch (Exception e) {
-            log.error("Exception occurred while handleGoogleCallback", e);
+            log.error("Exception occurred while handling Google OAuth callback", e);
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
     }
