@@ -7,8 +7,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.*;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -84,11 +82,7 @@ public class GoogleAuthController {
                     user.setUsername(email);
                     user.setPassword(passwordEncoder.encode(UUID.randomUUID().toString()));
                     userRepository.save(user);
-//                    userDetails = userDetailsService.loadUserByUsername(email);
                 }
-//                UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
-//                SecurityContextHolder.getContext().setAuthentication(authentication);
-
                 String jwtToken = jwtUtil.generateToken(email);
                 return ResponseEntity.ok(Collections.singletonMap("token", jwtToken));
             }
