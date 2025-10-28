@@ -78,7 +78,7 @@ public class GoogleAuthController {
             }
 
             String idToken = (String) tokenResponse.getBody().get("id_token");
-            log.info("Access token retrieved successfully. ID token: {}", idToken);
+//            log.info("Access token retrieved successfully. ID token: {}", idToken);
 
             String userInfoUrl = "https://oauth2.googleapis.com/tokeninfo?id_token=" + idToken;
             log.info("Fetching user info from Google using ID token...");

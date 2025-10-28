@@ -31,6 +31,7 @@ public class SpringSecurity {
         return http.authorizeHttpRequests(request -> request
                 .requestMatchers("/public/**").permitAll()
                         .requestMatchers("/swagger-ui/**", "/v3/api-docs/**", "/swagger-ui.html").permitAll()
+                        .requestMatchers("/journal").authenticated()
                 .requestMatchers("/user/**").authenticated()
                 .anyRequest().permitAll())
                 .csrf(AbstractHttpConfigurer::disable)
