@@ -58,7 +58,7 @@ public class UserController {
 
         userInDb.setUsername(user.getUsername());
         userInDb.setPassword(user.getPassword());
-        userService.saveEntry(userInDb);
+        userService.saveNewUser(userInDb);
         log.info("User '{}' updated successfully", username);
         return ResponseEntity.ok("User updated!");
     }

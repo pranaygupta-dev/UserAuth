@@ -57,7 +57,7 @@ public class PublicController {
         }
 
         // Save the user if not already present
-        userService.saveEntry(user);
+        userService.saveNewUser(user);
         log.info("User '{}' registered successfully", user.getUsername());
         return ResponseEntity.ok("User registered successfully");
     }

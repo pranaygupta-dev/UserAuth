@@ -12,6 +12,9 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
+import java.util.Arrays;
+import java.util.List;
+
 @Component
 @Slf4j
 public class UserServiceImpl implements UserService {
@@ -21,15 +24,22 @@ public class UserServiceImpl implements UserService {
 
     private static final PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
+    @Override
+    public void saveAdmin(User user) {
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        user.setRoles(Arrays.asList("USER", "ADMIN"));
+        userRepository.save(user);
+    }
 
     public void saveUser(User user) {
         userRepository.save(user);
     }
 
-    public void saveEntry(User user) {
+    public void saveNewUser(User user) {
         log.info("Saving user with username: {}", user.getUsername());
         try {
             user.setPassword(passwordEncoder.encode(user.getPassword()));
+            user.setRoles(Arrays.asList("USER"));
             userRepository.save(user);
             log.info("User '{}' saved successfully", user.getUsername());
         } catch (Exception e) {
@@ -55,4 +65,11 @@ public class UserServiceImpl implements UserService {
         log.info("User '{}' exists: {}", username, exists);
         return exists;
     }
+
+    @Override
+    public List<User> getAll() {
+        return userRepository.findAll();
+    }
+
+
 }
