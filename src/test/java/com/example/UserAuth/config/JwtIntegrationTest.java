@@ -2,7 +2,7 @@ package com.example.UserAuth.config;
 
 import com.example.UserAuth.entity.User;
 import com.example.UserAuth.repository.UserRepository;
-import com.example.UserAuth.service.TokenBlacklistService;
+import com.example.UserAuth.service.Impl.TokenBlacklistServiceImpl;
 import com.example.UserAuth.utils.JwtUtil;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -37,7 +37,7 @@ public class JwtIntegrationTest {
     private PasswordEncoder passwordEncoder;
 
     @Autowired
-    private TokenBlacklistService tokenBlacklistService;
+    private TokenBlacklistServiceImpl tokenBlacklistService;
 
     private User testUser;
     private String token;
@@ -45,7 +45,7 @@ public class JwtIntegrationTest {
     @BeforeEach
     void setUp() {
         userRepository.deleteAll();
-        tokenBlacklistService = new TokenBlacklistService();
+        tokenBlacklistService = new TokenBlacklistServiceImpl();
 
         testUser = new User();
         testUser.setUsername("johnny");

@@ -1,5 +1,6 @@
 package com.example.UserAuth.service;
 
+import com.example.UserAuth.service.Impl.TokenBlacklistServiceImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -11,11 +12,11 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 @ExtendWith(SpringExtension.class)
 public class TokenBlacklistServiceTest {
 
-    private TokenBlacklistService tokenBlacklistService;
+    private TokenBlacklistServiceImpl tokenBlacklistService;
 
     @BeforeEach
     public void setUp() {
-        tokenBlacklistService = new TokenBlacklistService();
+        tokenBlacklistService = new TokenBlacklistServiceImpl();
     }
 
     @Test

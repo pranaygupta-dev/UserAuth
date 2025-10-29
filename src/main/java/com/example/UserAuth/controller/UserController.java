@@ -2,6 +2,8 @@ package com.example.UserAuth.controller;
 
 import com.example.UserAuth.entity.User;
 import com.example.UserAuth.repository.UserRepository;
+import com.example.UserAuth.service.Impl.TokenBlacklistServiceImpl;
+import com.example.UserAuth.service.Impl.UserServiceImpl;
 import com.example.UserAuth.service.TokenBlacklistService;
 import com.example.UserAuth.service.UserService;
 import com.example.UserAuth.utils.JwtUtil;

@@ -1,7 +1,9 @@
 package com.example.UserAuth.controller;
 
 import com.example.UserAuth.entity.User;
-import com.example.UserAuth.service.UserDetailsServiceImpl;
+import com.example.UserAuth.service.Impl.UserDetailsServiceImpl;
+import com.example.UserAuth.service.Impl.UserServiceImpl;
+import com.example.UserAuth.service.UserDetailsService;
 import com.example.UserAuth.service.UserService;
 import com.example.UserAuth.utils.JwtUtil;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -12,8 +14,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.userdetails.UserDetails;
+//import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -32,7 +34,7 @@ public class PublicController {
     private UserService userService;
 
     @Autowired
-    private UserDetailsServiceImpl userDetailsService;
+    private UserDetailsService userDetailsService;
 
     @Autowired
     private JwtUtil jwtUtil;

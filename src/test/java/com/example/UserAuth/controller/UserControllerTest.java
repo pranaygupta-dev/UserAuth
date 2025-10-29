@@ -2,8 +2,8 @@ package com.example.UserAuth.controller;
 
 import com.example.UserAuth.entity.User;
 import com.example.UserAuth.repository.UserRepository;
-import com.example.UserAuth.service.TokenBlacklistService;
-import com.example.UserAuth.service.UserService;
+import com.example.UserAuth.service.Impl.TokenBlacklistServiceImpl;
+import com.example.UserAuth.service.Impl.UserServiceImpl;
 import com.example.UserAuth.utils.JwtUtil;
 import jakarta.servlet.http.HttpServletRequest;
 import org.junit.jupiter.api.BeforeEach;
@@ -20,8 +20,6 @@ import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
-import static org.apache.tomcat.util.net.openssl.OpenSSLStatus.getName;
-
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
@@ -29,13 +27,13 @@ import static org.mockito.Mockito.*;
 public class UserControllerTest {
 
     @Mock
-    private UserService userService;
+    private UserServiceImpl userService;
 
     @Mock
     private UserRepository userRepository;
 
     @Mock
-    private TokenBlacklistService tokenBlacklistService;
+    private TokenBlacklistServiceImpl tokenBlacklistService;
 
     @Mock
     private JwtUtil jwtUtil;

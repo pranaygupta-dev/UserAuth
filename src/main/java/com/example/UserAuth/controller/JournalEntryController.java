@@ -2,6 +2,8 @@ package com.example.UserAuth.controller;
 
 import com.example.UserAuth.entity.JournalEntry;
 import com.example.UserAuth.entity.User;
+import com.example.UserAuth.service.Impl.JournalEntryServiceImpl;
+import com.example.UserAuth.service.Impl.UserServiceImpl;
 import com.example.UserAuth.service.JournalEntryService;
 import com.example.UserAuth.service.UserService;
 import org.bson.types.ObjectId;

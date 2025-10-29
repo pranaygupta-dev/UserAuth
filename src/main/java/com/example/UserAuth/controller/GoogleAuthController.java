@@ -2,13 +2,14 @@ package com.example.UserAuth.controller;
 
 import com.example.UserAuth.entity.User;
 import com.example.UserAuth.repository.UserRepository;
+import com.example.UserAuth.service.UserDetailsService;
 import com.example.UserAuth.utils.JwtUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.*;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
+//import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;

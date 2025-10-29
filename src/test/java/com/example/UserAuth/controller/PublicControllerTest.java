@@ -1,8 +1,8 @@
 package com.example.UserAuth.controller;
 
 import com.example.UserAuth.entity.User;
-import com.example.UserAuth.service.UserDetailsServiceImpl;
-import com.example.UserAuth.service.UserService;
+import com.example.UserAuth.service.Impl.UserDetailsServiceImpl;
+import com.example.UserAuth.service.Impl.UserServiceImpl;
 import com.example.UserAuth.utils.JwtUtil;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -31,7 +31,7 @@ class PublicControllerTest {
     private AuthenticationManager authenticationManager;
 
     @Mock
-    private UserService userService;
+    private UserServiceImpl userService;
 
     @Mock
     private UserDetailsServiceImpl userDetailsService;

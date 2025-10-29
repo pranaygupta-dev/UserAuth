@@ -1,11 +1,12 @@
-package com.example.UserAuth.service;
+package com.example.UserAuth.service.Impl;
 
 import com.example.UserAuth.entity.User;
 import com.example.UserAuth.repository.UserRepository;
+import com.example.UserAuth.service.UserDetailsService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
+//import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Component;
 

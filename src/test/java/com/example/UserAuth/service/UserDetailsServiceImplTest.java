@@ -2,6 +2,7 @@ package com.example.UserAuth.service;
 
 import com.example.UserAuth.entity.User;
 import com.example.UserAuth.repository.UserRepository;
+import com.example.UserAuth.service.Impl.UserDetailsServiceImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

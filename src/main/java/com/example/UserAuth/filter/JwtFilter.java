@@ -1,5 +1,6 @@
 package com.example.UserAuth.filter;
 
+import com.example.UserAuth.service.Impl.TokenBlacklistServiceImpl;
 import com.example.UserAuth.service.TokenBlacklistService;
 import com.example.UserAuth.utils.JwtUtil;
 import jakarta.servlet.FilterChain;

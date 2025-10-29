@@ -20,11 +20,6 @@ public class JwtUtil {
         return Keys.hmacShaKeyFor(SECRET_KEY.getBytes());
     }
 
-//    public String extractUsername(String token) {
-//        Claims claims = extractAllClaims(token);
-//        return claims.getSubject();
-//    }
-
     public String extractUsername(String token) {
         try {
             return extractAllClaims(token).getSubject();
