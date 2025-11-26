@@ -54,7 +54,7 @@ class PublicControllerTest {
     @Test
     @DisplayName("Signup - Success")
     void testSignup_Success() {
-        Mockito.doNothing().when(userService).saveEntry(any(User.class));
+        Mockito.doNothing().when(userService).saveNewUser(any(User.class));
 
         ResponseEntity<?> response = publicController.signUp(validUser);
 
@@ -66,7 +66,7 @@ class PublicControllerTest {
     @DisplayName("Signup - Exception in service")
     void testSignup_ServiceThrowsException() {
         Mockito.doThrow(new RuntimeException("DB error"))
-                .when(userService).saveEntry(any(User.class));
+                .when(userService).saveNewUser(any(User.class));
 
         // Expect Spring default exception (will propagate)
         RuntimeException thrown = assertThrows(RuntimeException.class,

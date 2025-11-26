@@ -1,0 +1,26 @@
+version: '3.8'
+
+services:
+  mongodb:
+    image: mongo:7.0
+    container_name: mongodb1
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo-data:/data/db
+
+  app:
+    build: .
+    container_name: user-auth-application
+    ports:
+      - "8080:9090"
+    depends_on:
+      - mongodb
+    environment:
+      SPRING_DATA_MONGODB_URI: mongodb://mongodb:27017/users_auth
+
+volumes:
+  mongo-data:
+
+# we can also specify the environment variable in .env and use in compose file for safe and private purpose. so you commit compose file not .env, right!!!
+#  docker exec -it mongodb mongosh

@@ -39,7 +39,7 @@ public class UserServiceTests {
     @Test
     @DisplayName("saveEntry - Should Encode password and save user")
     void testSaveEntry_Success() {
-        userService.saveEntry(mockUser);
+        userService.saveUser(mockUser);
 
         ArgumentCaptor<User> userArgumentCaptor = ArgumentCaptor.forClass(User.class);
         verify(userRepository, times(1)).save(userArgumentCaptor.capture());

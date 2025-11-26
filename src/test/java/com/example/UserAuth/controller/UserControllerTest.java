@@ -93,7 +93,7 @@ public class UserControllerTest {
         assertEquals("User updated!", response.getBody());
         assertEquals("newjohn", updateUser.getUsername());
         assertEquals("newpass", updateUser.getPassword());
-        verify(userService, times(1)).saveEntry(userInDB);
+        verify(userService, times(1)).saveUser(userInDB);
     }
 
     @Test
