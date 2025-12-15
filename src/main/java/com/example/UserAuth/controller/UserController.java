@@ -1,11 +1,13 @@
 package com.example.UserAuth.controller;
 
+import com.example.UserAuth.api_response.WeatherResponse;
 import com.example.UserAuth.entity.User;
 import com.example.UserAuth.repository.UserRepository;
 import com.example.UserAuth.service.Impl.TokenBlacklistServiceImpl;
 import com.example.UserAuth.service.Impl.UserServiceImpl;
 import com.example.UserAuth.service.TokenBlacklistService;
 import com.example.UserAuth.service.UserService;
+import com.example.UserAuth.service.WeatherService;
 import com.example.UserAuth.utils.JwtUtil;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletRequest;
@@ -34,6 +36,9 @@ public class UserController {
 
     @Autowired
     private JwtUtil jwtUtil;
+
+    @Autowired
+    private WeatherService weatherService;
 
     @GetMapping("/profile")
     public ResponseEntity<?> getProfile() {
@@ -88,5 +93,16 @@ public class UserController {
             return ResponseEntity.ok("User Logout Succesfully!!");
         }
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("No token found in header!");
+    }
+
+    @GetMapping
+    public ResponseEntity<?> greeting() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        WeatherResponse weatherResponse = weatherService.getWeather("Mumbai");
+        String greeting = "";
+        if (weatherResponse != null) {
+            greeting = ", Weather feels like " + weatherResponse.getCurrent().getFeelslike();
+        }
+        return new ResponseEntity<>("Hi " + authentication.getName() + greeting, HttpStatus.OK);
     }
 }
