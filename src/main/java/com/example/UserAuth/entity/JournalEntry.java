@@ -1,5 +1,6 @@
 package com.example.UserAuth.entity;
 
+import com.example.UserAuth.enums.Sentiment;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -22,4 +23,6 @@ public class JournalEntry {
     private String content;
 
     private LocalDateTime date;
+
+    private Sentiment sentiment;
 }
